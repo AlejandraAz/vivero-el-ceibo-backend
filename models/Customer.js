@@ -1,8 +1,8 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/connection.js";
 
-const Admin = sequelize.define(
-  "Admin",
+const Customer = sequelize.define(
+  "Customer",
   {
     id: {
       primaryKey: true,
@@ -16,8 +16,8 @@ const Admin = sequelize.define(
       validate: {
         notEmpty: true,
         len: {
-          args: [3, 30],
-          msg: "The  name must be between 3 and 30 characters.",
+          args: [3, 100],
+          msg: "The  name must be between 3 and 100 characters.",
         },
       },
     },
@@ -46,8 +46,20 @@ const Admin = sequelize.define(
         },
       },
     },
+    sessionStatus: {
+      field: "estado_sesion",
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue:true
+    },
+    accountStatus: {
+      field: "estado_cuenta",
+      type: DataTypes.ENUM("activo", "bloqueado"),
+      allowNull: false,
+      defaultValue:"activo"
+    },
   },
-  { tableName: "admins", timestamps: false }
+  { tableName: "clientes", timestamps: false }
 );
 
-export default Admin;
+export default Customer;
