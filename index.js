@@ -2,10 +2,18 @@ import sequelize from "./config/connection.js";
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
+import "./models/index.js";
 // import seedAdmin from "./seed/seedAdmin.js"; //mi archivo para crear el admin
-import customerRoutes from "./routes/CustomerRoute.js";
-import categoryRoutes from "./routes/CategoryRoute.js";
-import productRoutes from "./routes/ProductRoute.js";
+import CustomerRoutes from "./routes/CustomerRoute.js";
+import CategoryRoutes from "./routes/CategoryRoute.js";
+import ProductRoutes from "./routes/ProductRoute.js";
+import CartRoutes from "./routes/CartRoute.js";
+import CartItemRoutes from "./routes/CartItemRoute.js";
+import AdminRoutes from "./routes/AdminRoute.js";
+import OrderRoutes from "./routes/OrderRoute.js";
+import OrderDetailRoutes from "./routes/OrderDetailRoute.js";
+import ShippingRoutes from "./routes/ShippingRoute.js";
+
 
 const app = express();
 
@@ -16,9 +24,15 @@ app.use(express.json());
 app.use(cors()); //Habilita CORS para permitir solicitudes del frontend 
 app.use(morgan('dev')); //Muestra logs en consola de cada solicitud HTTP
 
-app.use('/api/customers',customerRoutes);
-app.use('/api/categories',categoryRoutes);
-app.use('/api/products',productRoutes);
+app.use('/api/customers',CustomerRoutes);
+app.use('/api/categories',CategoryRoutes);
+app.use('/api/products',ProductRoutes);
+app.use('/api/carts',CartRoutes);
+app.use('/api/cart-items',CartItemRoutes);
+app.use('/api/admin',AdminRoutes);
+app.use('/api/orders',OrderRoutes);
+app.use('/api/order-details',OrderDetailRoutes);
+app.use('/api/shippings',ShippingRoutes);
 
 // Iniciar servidor y probar conexión DB
 async function startServer() {
