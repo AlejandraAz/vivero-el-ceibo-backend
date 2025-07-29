@@ -1,13 +1,22 @@
 import Product from "../models/Product.js";
+import { Op } from "sequelize";
 
 const getAllProducts = async (req, res) => {
+    const {name} = req.query;
     try {
-        const products = await Product.findAll();
+        const whereClause = name
+            ? { name: { [Op.like]: `%${name}%` } } // Sequelize LIKE insensible a mayúsculas
+            : {};
+        const products = await Product.findAll({
+            where:whereClause,
+            limit:5
+        });
 
         if (products.length === 0) {
-            return res.status(404).json({
-                status: 404,
-                message: "No products found."
+            return res.status(200).json({
+                status: 200,
+                message: "No products found.",
+                products
             });
         }
 
