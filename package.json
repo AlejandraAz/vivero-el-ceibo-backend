@@ -1,0 +1,42 @@
+{
+  "name": "backendviveroelceibo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development node --watch index.js",
+    "start": "cross-env NODE_ENV=production node index.js",
+    "db:sync": "node scripts/syncDB.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed": "node -r dotenv/config scripts/seedAdmin.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.2",
+    "cloudinary": "^1.41.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^5.1.0",
+    "google-auth-library": "^10.3.0",
+    "groq-sdk": "^0.33.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.2",
+    "multer-storage-cloudinary": "^4.0.0",
+    "mysql2": "^3.14.1",
+    "node-cache": "^5.1.2",
+    "nodemailer": "^7.0.9",
+    "sequelize": "^6.37.7",
+    "streamifier": "^0.1.1"
+  },
+  "devDependencies": {
+    "cross-env": "^10.0.0",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.10"
+  }
+}
