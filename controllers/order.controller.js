@@ -228,4 +228,69 @@ const createOrder = async (req, res) => {
     return res.status(500).json({ status: 500, message: "Error interno del servidor.", error: error.message });
   }
 };
+
+// ******Controller de graficos de dasbhoard
+export const getOrdersByStatus = async (req, res) => {
+  try {
+    const orders = await Order.findAll({
+      attributes: [
+        ['estado', 'status'],
+        [sequelize.fn('COUNT', sequelize.col('estado')), 'count']
+      ],
+      group: ['estado']
+    });
+
+    res.json({ data: orders });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al obtener pedidos por estado" });
+  }
+};
+//  Para ver cual metodo de pago se prefiere
+export const getPaymentMethodStats = async (req, res) => {
+  try {
+    const result = await Order.findAll({
+      attributes: [
+         ['metodo_pago', 'payment_method'],
+        [sequelize.fn('COUNT', sequelize.col('metodo_pago')), 'count']
+      ],
+      group: ['metodo_pago']
+    });
+
+    res.json({ data: result });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al obtener métodos de pago" });
+  }
+};
+
+// productos mas vendidos
+export const getTopSellingProducts = async (req, res) => {
+  try {
+    const products = await OrderDetail.findAll({
+      attributes: [
+        [sequelize.col("Product.nombre"), "product_name"],
+        [sequelize.fn("SUM", sequelize.col("OrderDetail.cantidad")), "totalSold"]
+      ],
+      include: [
+        {
+          model: Product,
+          as: "product",
+          attributes: []
+        }
+      ],
+      where: { status: true },
+      group: ["product.nombre"],
+      order: [[sequelize.fn("SUM", sequelize.col("OrderDetail.cantidad")), "DESC"]],
+      limit: 10,
+      raw: true
+    });
+
+    res.json({ data: products });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error obteniendo productos más vendidos" });
+  }
+};
+
 export {getOrdersByCustomer, getOrderById, createOrder, };

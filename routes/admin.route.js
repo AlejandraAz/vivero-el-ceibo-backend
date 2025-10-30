@@ -1,7 +1,8 @@
 import { Router } from "express";
+import {getOrdersByStatus,getPaymentMethodStats,getTopSellingProducts} from "../controllers/order.controller.js"
 // import { getAllProducts } from "../controllers/product.controller.js";
 import { getUsersByWeek } from "../controllers/customer.controller.js";
-import { getAllCustomers,toggleCustomerStatus,getAllAdmins,updateAdminStatus,getAllOrdersAdmin,getOrderDetailAdminById,updateOrderStatus,createAdmin,updateShippingStatus } from "../controllers/admin.controller.js";
+import { getAllCustomers,toggleCustomerStatus,getAllAdmins,updateAdminStatus,getAllOrdersAdmin,getOrderDetailAdminById,updateOrderStatus,createAdmin,updateShippingStatus, } from "../controllers/admin.controller.js";
 import { protect,restrictTo } from "../middleware/auth.js";
 import { deleteShipping, getAllShippingsAdmin, getShippingByIdAdmin } from "../controllers/shipping.controller.js";
 import { getAllCarts,getCartById,updateCart,desactivateCart,getActiveCartByCustomer } from "../controllers/cart.controller.js";
@@ -41,6 +42,11 @@ router.put("/cart/:id", protect,restrictTo('admin'), updateCart);
 router.put("/cart/desactivate/:cartId", protect,restrictTo('admin'), desactivateCart);
 
 // Gestión de pedidos
+// **para grafico de productos,metodo de pago seleccionado y estado pedidos
+router.get("/orders/status-chart",protect,restrictTo('admin'), getOrdersByStatus);
+router.get("/orders/payment-methods", protect,restrictTo('admin'),getPaymentMethodStats);
+router.get("/orders/top-products", protect,restrictTo('admin'),getTopSellingProducts);
+
 router.get("/orders",protect,restrictTo('admin'), getAllOrdersAdmin); // listar pedidos con detalle
 router.get("/orders/:id",protect,restrictTo('admin'), getOrderDetailAdminById); // ver detalle específico
 router.put("/orders/:id/status",protect,restrictTo('admin'), updateOrderStatus); // cambiar estado del pedido
