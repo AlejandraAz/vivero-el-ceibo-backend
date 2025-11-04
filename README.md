@@ -164,6 +164,34 @@ Admin:
 
 📍 Nombres en BD en español — nombres en backend en inglés para buenas prácticas
 
+## Modelos del sistema
+
+- Customer:representa a los clientes registrados en el sistema. Pueden explorar productos, agregar artículos al carrito, realizar pedidos y recibir envíos.
+- Admin:usuario administrador del sistema. Tiene permisos para gestionar productos, categorías y pedidos. Además, puede activar, bloquear o desbloquear cuentas de clientes en caso de incumplimiento de las políticas de la empresa.
+- Product: catálogo de productos disponibles en el vivero. Cada producto pertenece a una categoría.  
+- Cart: representa el carrito de compras de un cliente. Puede estar activo o inactivo y almacenar múltiples productos seleccionados por el usuario antes de concretar una compra.
+- CartItem:relación entre un carrito y los productos que contiene. Incluye información como la cantidad seleccionada y el precio unitario al momento de agregarlo al carrito.
+- Order: pedido realizado por un cliente. Contiene la información general del pedido como fecha, total, estado, cliente que lo realizó y, opcionalmente, un envío asociado.
+- OrderDetail:detalle de los productos incluidos en un pedido. Por cada producto comprado, se guarda la cantidad, el precio y la relación con el producto y el pedido.
+- Category: clasificación de los productos. Facilita la organización del catálogo y la navegación por parte de los usuarios.
+- Shipping: información del envío asociado a un pedido. Contiene detalles como la dirección.
+
+---
+
+## Seeds (datos iniciales)
+
+✅ Se incluye un seed que crea un **administrador inicial**.
+para activarlo,descomentarlo en el index.js que se encuentra en la raiz del proyecto. 
+
+---
+
+## Notas importantes
+
+- 🛒 Los **carritos se inactivan automáticamente** una vez que se confirma un pedido, para evitar duplicaciones o cambios posteriores.
+- 🌐 Las rutas están organizadas con prefijos `/api` para facilitar futuras integraciones frontend.
+
+
+
 ✅ Estado del Proyecto
 
 ✔ Panel Admin
